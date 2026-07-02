@@ -6,38 +6,10 @@
 <title>Book Your Orthopaedic Consultation — OrthoNow Bengaluru</title>
 <meta name="description" content="Book a consultation with a senior orthopaedic surgeon at OrthoNow, Bengaluru. Same-week appointments across 9 clinics.">
 
-<!--
-  ============================================================
-  ORTHONOW — "Book a Consultation" Landing Page
-  ============================================================
-  Built as a single self-contained file: no frameworks, no
-  external font/image requests, so the page has almost nothing
-  to block on. This is deliberate — it's the main lever for
-  hitting a 90+ mobile PageSpeed score.
-
-  Structure (kept intentionally tight — 4 sections):
-    1. Header  — wordmark + clinic count (trust, not navigation)
-    2. Hero    — headline + subhead + 2-field form (form is
-                 visible immediately, not hidden below a fold —
-                 healthcare leads convert worse when the form
-                 requires a second action to even find)
-    3. Trust bar — credentials + patient count + city coverage
-    4. Footer  — minimal, just contact fallback
-
-  Font stack: system fonts only (no @font-face, no Google Fonts
-  link). This avoids a render-blocking network request entirely.
-  Character comes from scale/weight contrast instead of a
-  custom typeface.
-  ============================================================
--->
 
 <style>
   :root {
-    /* ---- Color tokens ----
-       Deliberately not the generic cream+terracotta or
-       dark+neon combos. Teal reads clinical/trustworthy
-       without being sterile hospital-blue; amber gives the
-       CTA warmth and urgency against it. */
+   
     --color-bg: #F5F3EE;
     --color-surface: #FFFFFF;
     --color-ink: #1A2E32;
@@ -87,7 +59,7 @@
     padding: 0 20px;
   }
 
-  /* ---------- Header ---------- */
+
   header.site {
     padding: 18px 0;
     border-bottom: 1px solid var(--color-border);
@@ -121,9 +93,7 @@
     padding: 56px 0 48px;
   }
 
-  /* Signature element: subtle line-art of a knee joint,
-     rendered as inline SVG (zero network cost). It's the one
-     visual flourish on the page — everything else stays quiet. */
+
   .hero-motif {
     position: absolute;
     top: -40px;
@@ -239,7 +209,7 @@
   .field input {
     width: 100%;
     padding: 13px 14px;
-    font-size: 16px; /* 16px avoids iOS auto-zoom on focus */
+    font-size: 16px; 
     border: 1px solid var(--color-border);
     border-radius: 8px;
     background: #FCFBF9;
@@ -297,7 +267,7 @@
     margin: 12px 0 0;
   }
 
-  /* ---------- Thank-you state ---------- */
+
   .thankyou {
     display: none;
     text-align: center;
@@ -327,7 +297,7 @@
     margin: 0;
   }
 
-  /* ---------- Trust bar ---------- */
+
   .trust-bar {
     background: var(--color-primary-dark);
     color: #F2F0E9;
@@ -366,7 +336,7 @@
     font-size: 12.5px;
   }
 
-  /* ---------- Footer ---------- */
+  
   footer.site {
     padding: 22px 0 32px;
     text-align: center;
@@ -380,7 +350,7 @@
     text-decoration: none;
   }
 
-  /* ---------- Responsive ---------- */
+
   @media (max-width: 780px) {
     .hero-grid {
       grid-template-columns: 1fr;
@@ -409,7 +379,7 @@
 
 <main>
   <section class="hero">
-    <!-- Signature visual: line-art knee joint, not a stock photo -->
+
     <svg class="hero-motif" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M70 10 L75 70 Q60 90 65 110 L60 160 Q58 180 75 190" stroke="#1A2E32" stroke-width="3" stroke-linecap="round"/>
       <path d="M120 10 L118 70 Q135 92 128 112 L132 160 Q135 180 118 190" stroke="#1A2E32" stroke-width="3" stroke-linecap="round"/>
@@ -502,13 +472,7 @@
 </footer>
 
 <script>
-  // ============================================================
-  // Form handling
-  // ============================================================
-  // No page reload on submit — this is an SPA-style form
-  // interaction, which is exactly the case GTM can't see on its
-  // own (see Task 1). The dataLayer push below is what a GTM
-  // Custom Event trigger would listen for.
+  
   (function () {
     window.dataLayer = window.dataLayer || [];
 
@@ -526,8 +490,7 @@
     }
 
     function isValidPhone(value) {
-      // Basic Indian mobile pattern: 10 digits, optionally with
-      // a leading 0 or +91 — strips non-digits before checking.
+      
       var digitsOnly = value.replace(/\D/g, '');
       var normalized = digitsOnly.replace(/^(91|0)/, '');
       return /^[6-9]\d{9}$/.test(normalized);
@@ -538,7 +501,7 @@
     }
 
     form.addEventListener('submit', function (event) {
-      event.preventDefault(); // never let this hit a server / reload the page in this demo
+      event.preventDefault(); 
 
       var nameValid = isValidName(nameInput.value);
       var phoneValid = isValidPhone(phoneInput.value);
@@ -547,15 +510,10 @@
       setFieldValid(phoneField, phoneValid);
 
       if (!nameValid || !phoneValid) {
-        return; // stop here — do not fire the conversion on a failed/invalid submit
+        return; 
       }
 
-      // ---- GTM dataLayer push ----
-      // Fires only on a validated, successful submit — not on
-      // page load, not on an invalid attempt. Note: no PII
-      // (name/phone) is pushed here. GA4 prohibits sending PII
-      // as event parameters; the actual name/phone goes to the
-      // CRM via the server-side integration described in Task 3.
+     
       window.dataLayer.push({
         event: 'consultation_form_submitted',
         form_location: 'hero_primary',
@@ -563,16 +521,15 @@
         campaign_source: 'google_ads_consultation_lp'
       });
 
-      // Swap to thank-you state without a page reload
       formState.style.display = 'none';
       thankyouState.classList.add('visible');
 
-      // Move focus to the confirmation for screen reader users
+
       thankyouState.setAttribute('tabindex', '-1');
       thankyouState.focus();
     });
 
-    // Clear the invalid state as the person starts fixing a field
+ 
     nameInput.addEventListener('input', function () {
       if (nameField.classList.contains('invalid') && isValidName(nameInput.value)) {
         setFieldValid(nameField, true);
